@@ -22,8 +22,8 @@ pipeline {
     stage('redeploy'){
         steps{
             sshagent(credentials : ['ssh-einav-inst']) {
-            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker stop magshimim | true"
-            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=magshimim --rm -d -p 80:80  cybereason/magshimim-web:0.0.1"
+            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker stop magshimim-einav | true"
+            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=magshimim-einav --rm -d -p 8081:8081  cybereason/magshimim-web:0.0.1"
     
         }
         }
@@ -33,7 +33,7 @@ pipeline {
          agent { docker { image 'curlimages/curl' } }
         steps{
             script {
-                    final String response = sh(script: "curl -s $url", returnStdout: true).trim()
+                    final String response = sh(script: "curl -s ${url}:8081", returnStdout: true).trim()
                     echo response
                 }
         }
