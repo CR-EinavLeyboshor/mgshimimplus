@@ -1,11 +1,14 @@
 // ed08f3a9e0d646b9b0f6adddb5cb6429
 final String url = "34.85.236.100"
+final String app_name="magshimim"
+final String app_version="0.0.1"
+final String host_port="80"
 pipeline {
     agent { docker { image 'docker:latest' } }
     stages {
         stage('build') {
             steps {
-                sh 'docker build -t  einavl/magshimim-web:0.0.1 web-server'
+                sh "docker build -t  einavl/magshimim-web:${app_version} web-server"
             }
         }
          stage('push') {
@@ -13,7 +16,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerpwd')]) {
                 sh """
                     docker login -u einavl -p ${dockerpwd} 
-                    docker push  einavl/magshimim-web:0.0.1
+                    docker push  einavl/magshimim-web:${app_version}
                 """
                 }
 
@@ -22,8 +25,8 @@ pipeline {
     stage('redeploy'){
         steps{
             sshagent(credentials : ['ssh-einav-inst']) {
-            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker stop magshimim | true"
-            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=magshimim --rm -d -p 80:80  einavl/magshimim-web:0.0.1"
+            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker stop ${app_name} | true"
+            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=${app_name} --rm -d -p ${host_port}:80  einavl/magshimim-web:${app_version}"
     
         }
         }
