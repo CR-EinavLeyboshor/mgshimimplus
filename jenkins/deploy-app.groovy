@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'docker build -t  cybereason/magshimim-web:0.0.1 web-server'
+                sh 'docker build -t  einavl/magshimim-web:0.0.1 web-server'
             }
         }
          stage('push') {
@@ -13,7 +13,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerpwd')]) {
                 sh """
                     docker login -u recyber -p ${dockerpwd} 
-                    docker push  cybereason/magshimim-web:0.0.1
+                    docker push  einavl/magshimim-web:0.0.1
                 """
                 }
 
@@ -23,7 +23,7 @@ pipeline {
         steps{
             sshagent(credentials : ['ssh-einav-inst']) {
             sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker stop magshimim-einav | true"
-            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=magshimim-einav --rm -d -p 8081:80  cybereason/magshimim-web:0.0.1"
+            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=magshimim-einav --rm -d -p 8081:80  einavl/magshimim-web:0.0.1"
     
         }
         }
