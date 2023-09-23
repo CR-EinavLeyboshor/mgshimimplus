@@ -23,7 +23,7 @@ pipeline {
         steps{
             sshagent(credentials : ['ssh-einav-inst']) {
             sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker stop magshimim-einav | true"
-            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=magshimim-einav --rm -d -p 8081:8081  cybereason/magshimim-web:0.0.1"
+            sh "ssh -o StrictHostKeyChecking=no einav.leybsohor@${url} sudo docker run --pull=always --name=magshimim-einav --rm -d -p 8081:80  cybereason/magshimim-web:0.0.1"
     
         }
         }
