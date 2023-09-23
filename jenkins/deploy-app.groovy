@@ -12,7 +12,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerpwd')]) {
                 sh """
-                    docker login -u recyber -p ${dockerpwd} 
+                    docker login -u einavl -p ${dockerpwd} 
                     docker push  einavl/magshimim-web:0.0.1
                 """
                 }
