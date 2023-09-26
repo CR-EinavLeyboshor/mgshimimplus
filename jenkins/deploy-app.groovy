@@ -1,8 +1,8 @@
 // ed08f3a9e0d646b9b0f6adddb5cb6429
 final String url = "34.85.236.100"
-final String app_name="magshimim"
-final String app_version="0.0.1"
-final String host_port="80"
+final String app_name="ori-hagever"
+final String app_version="0.0.69"
+final String host_port="6969"
 pipeline {
     agent { docker { image 'docker:latest' } }
     stages {
