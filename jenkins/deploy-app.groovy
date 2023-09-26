@@ -2,7 +2,7 @@
 final String url = "34.85.236.100"
 final String app_name="ori-hagever"
 final String app_version="0.0.69"
-final String host_port="6969"
+final String host_port="8089"
 pipeline {
     agent { docker { image 'docker:latest' } }
     stages {
