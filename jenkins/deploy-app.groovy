@@ -2,7 +2,7 @@
 final String url = "34.85.236.100"
 final String app_name="magshimimPlus"
 final String app_version="0.0.1"
-final String host_port="8069"
+final String host_port="8082"
 pipeline {
     agent { docker { image 'docker:latest' } }
     stages {
